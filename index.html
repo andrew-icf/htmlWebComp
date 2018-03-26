@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Web Components</title>
+    <link rel="import" href="garage.html" id="garage">
+  </head>
+  <body>
+    <template>
+      <p>I'm coming from a template!</p>
+       <template id="nested"></template> <!-- will need to clone this one seperate from it's parent -->
+    </template>
+    <br>
+    <!-- Option 1 -->
+    <slick-tab></slick-tab>
+
+    <!-- <button is="super-button"></button> -->
+  </body>
+
+  <script>
+    var garageContent = docement.querySelector('#garage').import;
+    var carList = garageContent.querySelector('ul');
+    document.body.appendChild(carList);
+
+    // inert - not being run by the browser, needs to be placed in the DOM
+    var template = document.querySelector('template'); // anything in a template does NOT run until it is activated
+    var clone = document.importNode(template.content, true); // this is how you get what is in that template, 2nd param is a deep copy
+    document.body.appendChild(clone); // this runs the template
+
+    // Registering Elements  ************************
+    var SlickTabs = Object.create(HTMLElement.prototype); // if it was a button HTMLButtonElement.prototype
+    // Add properties and functions to prototype here
+    SlickTabs.createdCallback = function() {
+      this.innerHTML = "<h2>Boom</h2><textarea></textarea></br><input type='submit'/>"
+    }
+    var SlickTab = document.registerElement('slick-tab', {
+      prototype: SlickTabs
+      // extends: 'button' we need this when we are extending those native elements
+    });
+    document.appendChild(new SlickTabs());
+
+    // 2nd option to instantiate
+    // var textBox = new SlickTab();
+    // document.appendChild(textBox);
+
+    // 3rd option to instantiate
+    // var textBox = document.createElement('slick-tab');
+    // document.body.appendChild(textBox);
+
+    // Option 4
+    // document.body.innerHTML = '<slick-tab />';
+
+    // Instantiate via JS Or new operator
+    // var button = document.createElement('button', 'super-button');
+    // document.body.appendChild(new SuperButton());
+
+    // Using the Shadow DOM ************************
+    // var host = document.querySelector('#shadow-root');
+    // var root = host.createShadowRoot(); use the shadow root to get to your shadow elements
+    // root.appendChild(documnet.importNode(template.content, true));
+    // Any JS that is attached to the shadow DOM is not encapsulated to the shadow DOM it is still apart of window
+
+
+  </script>
+
+</html>

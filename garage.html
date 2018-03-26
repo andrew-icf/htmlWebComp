@@ -1,0 +1,16 @@
+<div>
+  <ul>
+    <li>Car1</li>
+    <li>Car2</li>
+    <li>Car3</li>
+  </ul>
+</div>
+
+<p id="disclaimer">Something about a disclaimer</p>
+
+<script>
+  var importDoc = document.currentScript.ownerDocument;
+  function getDisclaimer() {
+    alert(importDoc.querySelector('#disclaimer').innerText);
+  }
+</script>
